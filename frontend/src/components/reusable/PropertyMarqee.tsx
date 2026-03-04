@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { PropertyCard } from "./PropertyCard";
-import { allProperties } from "../../data/listingProperties";
+import { PropertyCard, type Property } from "./PropertyCard";
+import { fetchListings } from "@/lib/listingsApi";
 import "../../sections/PropertyListingsection.css";
 import "./PropertyMarqee.css";
 
@@ -13,12 +13,27 @@ export default function PropertyMarquee() {
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const cursorRef = useRef<HTMLDivElement | null>(null);
+  const [properties, setProperties] = useState<Property[]>([]);
 
   const SPEED_PX_PER_SEC = 42;
   const GAP_PX_FALLBACK = 18;
 
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      const cmsListings = await fetchListings();
+      if (!cancelled) {
+        setProperties(cmsListings ?? []);
+      }
+    };
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   // Duplicate for seamless loop
-  const doubled = useMemo(() => [...allProperties, ...allProperties], []);
+  const doubled = useMemo(() => [...properties, ...properties], [properties]);
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -33,7 +48,7 @@ export default function PropertyMarquee() {
 
     const getSetWidth = () => {
       const children = Array.from(track.children) as HTMLElement[];
-      const count = allProperties.length;
+      const count = properties.length;
       const gap = getGap();
       let w = 0;
       for (let i = 0; i < count; i++) {
@@ -191,7 +206,7 @@ export default function PropertyMarquee() {
       window.removeEventListener("touchend", onUp);
       window.removeEventListener("resize", onResize);
     };
-  }, [GAP_PX_FALLBACK, SPEED_PX_PER_SEC]);
+  }, [GAP_PX_FALLBACK, SPEED_PX_PER_SEC, properties.length]);
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -283,6 +298,12 @@ export default function PropertyMarquee() {
           </div>
         </div>
       </div>
+
+      {!properties.length && (
+        <div className="wrap">
+          <p className="section-subtitle">No listings found in CMS.</p>
+        </div>
+      )}
 
       <div className="rgMarquee__cta">
         <Link

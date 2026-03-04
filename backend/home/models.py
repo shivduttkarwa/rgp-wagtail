@@ -3,7 +3,7 @@ from wagtail.api import APIField
 from wagtail.fields import StreamField
 from wagtail.models import Page
 
-from .blocks import HeroBlock, IntroBlock, SectionToggleBlock
+from .blocks import HeroBlock, IntroBlock, PropertyListingBlock, SectionToggleBlock
 
 
 class HomePage(Page):
@@ -11,7 +11,7 @@ class HomePage(Page):
         [
             ("hero", HeroBlock()),
             ("intro", IntroBlock()),
-            ("property_listing", SectionToggleBlock(label="Property Listing")),
+            ("property_listing", PropertyListingBlock()),
             ("service_selection", SectionToggleBlock(label="Service Selection")),
             ("philosophy_pillars", SectionToggleBlock(label="Philosophy Pillars")),
             ("portfolio_showcase", SectionToggleBlock(label="Portfolio Showcase")),

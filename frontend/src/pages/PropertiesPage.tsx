@@ -17,7 +17,6 @@ import {
   type Property,
   type Category,
 } from "../components/reusable/PropertyCard";
-import { allProperties } from "../data/listingProperties";
 import { initGsapSwitchAnimations } from "@/lib/gsapSwitchAnimations";
 import { fetchListings } from "@/lib/listingsApi";
 import "./PropertiesPage.css";
@@ -126,7 +125,7 @@ export default function PropertiesPage() {
   const [displayedFilters, setDisplayedFilters] =
     useState<Filters>(DEFAULT_FILTERS);
   const [isExiting, setIsExiting] = useState(false);
-  const [properties, setProperties] = useState<Property[]>(allProperties);
+  const [properties, setProperties] = useState<Property[]>([]);
 
   const pendingRef = useRef<Filters>(DEFAULT_FILTERS);
   const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -166,8 +165,8 @@ export default function PropertiesPage() {
     let cancelled = false;
     const load = async () => {
       const cmsListings = await fetchListings();
-      if (!cancelled && cmsListings?.length) {
-        setProperties(cmsListings);
+      if (!cancelled) {
+        setProperties(cmsListings ?? []);
       }
     };
     void load();

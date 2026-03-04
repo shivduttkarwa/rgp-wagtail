@@ -39,6 +39,11 @@ export type IntroBlockValue = {
   }>;
 };
 
+export type PropertyListingBlockValue = {
+  enabled?: boolean;
+  listings?: Array<number | { id?: number }>;
+};
+
 export type HomePageApi = {
   id: number;
   title: string;

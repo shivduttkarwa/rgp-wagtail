@@ -85,6 +85,10 @@ class Listing(ClusterableModel):
     agent_review_count = models.PositiveIntegerField(default=0)
 
     is_active = models.BooleanField(default=True)
+    show_in_property_listing = models.BooleanField(
+        default=False,
+        help_text="Show this listing in the homepage property listing section.",
+    )
     sort_order = models.IntegerField(default=0)
 
     panels = [
@@ -96,6 +100,7 @@ class Listing(ClusterableModel):
                 FieldPanel("status"),
                 FieldPanel("location"),
                 FieldPanel("is_active"),
+                FieldPanel("show_in_property_listing"),
                 FieldPanel("sort_order"),
             ],
             heading="Basics",

@@ -1,5 +1,6 @@
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 
 class HeroBlock(blocks.StructBlock):
@@ -52,3 +53,16 @@ class SectionToggleBlock(blocks.StructBlock):
     class Meta:
         icon = "placeholder"
         label = "Section Toggle"
+
+
+class PropertyListingBlock(blocks.StructBlock):
+    enabled = blocks.BooleanBlock(required=False, default=True)
+    listings = blocks.ListBlock(
+        SnippetChooserBlock("listings.Listing"),
+        required=False,
+        help_text="Optional: pick specific listings for homepage cards. If empty, the homepage checkbox filter is used.",
+    )
+
+    class Meta:
+        icon = "home"
+        label = "Property Listing"

@@ -71,11 +71,20 @@ class ListingListApiView(generics.ListAPIView):
     serializer_class = ListingCardSerializer
 
     def get_queryset(self):
-        return (
-            Listing.objects.filter(is_active=True)
-            .prefetch_related("features")
-            .order_by("sort_order", "id")
-        )
+        queryset = Listing.objects.filter(is_active=True).prefetch_related("features")
+        show_in_home = self.request.query_params.get("show_in_property_listing")
+        ids_raw = self.request.query_params.get("ids")
+        if ids_raw:
+            parsed_ids = []
+            for chunk in ids_raw.split(","):
+                chunk = chunk.strip()
+                if chunk.isdigit():
+                    parsed_ids.append(int(chunk))
+            if parsed_ids:
+                queryset = queryset.filter(id__in=parsed_ids)
+        if show_in_home and show_in_home.lower() in {"1", "true", "yes", "on"}:
+            queryset = queryset.filter(show_in_property_listing=True)
+        return queryset.order_by("sort_order", "id")
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()

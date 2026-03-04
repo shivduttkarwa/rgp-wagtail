@@ -22,6 +22,18 @@ export async function fetchListings(): Promise<Property[] | null> {
   return fetchJson<Property[]>(`${apiBase}/listings/`);
 }
 
+export async function fetchHomepageListings(): Promise<Property[] | null> {
+  return fetchJson<Property[]>(
+    `${apiBase}/listings/?show_in_property_listing=true`,
+  );
+}
+
+export async function fetchListingsByIds(ids: number[]): Promise<Property[] | null> {
+  const normalized = ids.filter((id) => Number.isInteger(id) && id > 0);
+  if (!normalized.length) return [];
+  return fetchJson<Property[]>(`${apiBase}/listings/?ids=${normalized.join(",")}`);
+}
+
 export async function fetchListingDetail(slug: string): Promise<PropertyData | null> {
   return fetchJson<PropertyData>(`${apiBase}/listings/${slug}/`);
 }

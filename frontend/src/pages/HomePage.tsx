@@ -14,6 +14,7 @@ import {
   getImageUrl,
   type HeroBlockValue,
   type IntroBlockValue,
+  type PropertyListingBlockValue,
   type StreamFieldBlock,
 } from "@/lib/wagtailApi";
 export default function HomePage({ ready = false }: { ready?: boolean }) {
@@ -70,6 +71,19 @@ export default function HomePage({ ready = false }: { ready?: boolean }) {
     const intro = cmsBlocks.find((block) => block.type === "intro");
     return intro?.value as IntroBlockValue | undefined;
   }, [cmsBlocks]);
+
+  const propertyListingContent = useMemo<PropertyListingBlockValue | undefined>(() => {
+    const block = cmsBlocks.find((item) => item.type === "property_listing");
+    return block?.value as PropertyListingBlockValue | undefined;
+  }, [cmsBlocks]);
+
+  const selectedPropertyListingIds = useMemo(() => {
+    const raw = propertyListingContent?.listings ?? [];
+    const ids = raw
+      .map((item) => (typeof item === "number" ? item : item?.id))
+      .filter((id): id is number => Number.isInteger(id) && id > 0);
+    return Array.from(new Set(ids));
+  }, [propertyListingContent]);
 
   const parseTitleMarkup = (value?: string): ReactNode => {
     if (!value) return "";
@@ -204,7 +218,9 @@ export default function HomePage({ ready = false }: { ready?: boolean }) {
         stats={introContent?.stats}
       />
 
-      <PropertyListingSection />
+      {propertyListingContent?.enabled !== false && (
+        <PropertyListingSection listingIds={selectedPropertyListingIds} />
+      )}
 
       <ServiceSelection />
       <PhilosophyPillars />
