@@ -51,7 +51,7 @@ export function getImageUrl(image?: WagtailImage): string | undefined {
 
 export async function fetchHomePage(): Promise<HomePageApi | null> {
   const url = `${apiBase}/pages/?type=home.HomePage&fields=title,slug,body&limit=1`;
-  const res = await fetch(url, { credentials: "include" });
+  const res = await fetch(url);
   if (!res.ok) {
     return null;
   }
