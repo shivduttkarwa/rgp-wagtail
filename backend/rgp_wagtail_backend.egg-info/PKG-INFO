@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: rgp-wagtail-backend
+Version: 0.1.0
+Requires-Python: >=3.11
+Requires-Dist: Django<5.2,>=5.0
+Requires-Dist: wagtail<8.0,>=7.2
+Requires-Dist: psycopg[binary]<4.0,>=3.1
+Requires-Dist: django-environ<1.0,>=0.11
+Requires-Dist: django-cors-headers<5.0,>=4.3
+Requires-Dist: whitenoise<7.0,>=6.6

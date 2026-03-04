@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+<!-- =========================
+RGP Split Rail Slider (SAFE)
+- Shows slide 1 even without Swiper
+- When Swiper loads: synced vertical sliders + smooth text slide up/down
+========================= -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- Swiper CSS (must load) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<section class="rgpRailDock" data-rgp-skin="s1">
+  <div class="rgpRailDock__shell">
+    <!-- LEFT: Media rail -->
+    <div class="rgpRailDock__mediaPane">
+      <div class="swiper rgpMediaRail">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide rgpMediaRail__slide">
+            <img
+              class="rgpMediaRail__img"
+              data-swiper-parallax-y="80%"
+              src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1800&q=80"
+              alt="Slide 1"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="swiper-slide rgpMediaRail__slide">
+            <img
+              class="rgpMediaRail__img"
+              data-swiper-parallax-y="80%"
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1800&q=80"
+              alt="Slide 2"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="swiper-slide rgpMediaRail__slide">
+            <img
+              class="rgpMediaRail__img"
+              data-swiper-parallax-y="80%"
+              src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1800&q=80"
+              alt="Slide 3"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: Nav -->
+    <div class="rgpRailDock__nav" aria-label="Slider controls">
+      <button class="rgpNavOrb rgpNavOrb--prev" type="button" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M14.5 6.5L9 12l5.5 5.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+
+      <button class="rgpNavOrb rgpNavOrb--next" type="button" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M9.5 6.5L15 12l-5.5 5.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- RIGHT: Copy rail -->
+    <div class="rgpRailDock__copyPane">
+      <div class="swiper rgpCopyRail">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide rgpCopyRail__slide" data-skin="s1">
+            <div class="rgpCopyCard">
+              <div class="rgpCopyCard__kicker">our Purpose</div>
+
+              <h2 class="rgpCopyCard__title">
+                A CHRIST-CENTRED<br />
+                COMMUNITY
+              </h2>
+
+              <p class="rgpCopyCard__text">
+                William Clarke College was founded on a deep conviction that the teachings of the Bible—particularly
+                those concerning Jesus Christ as creator, sustainer, and redeemer—are true and transformative.
+              </p>
+
+              <a class="rgpCopyCard__link" href="#">
+                <span class="rgpCopyCard__arrow">→</span>
+                DISCOVER WHO WE ARE
+              </a>
+            </div>
+          </div>
+
+          <div class="swiper-slide rgpCopyRail__slide" data-skin="s2">
+            <div class="rgpCopyCard">
+              <div class="rgpCopyCard__kicker">our Purpose</div>
+
+              <h2 class="rgpCopyCard__title">
+                DEVELOPING<br />
+                EXTRAORDINARY<br />
+                LEARNERS
+              </h2>
+
+              <p class="rgpCopyCard__text">
+                We believe every student has the potential to be an Extraordinary Learner—someone who actively engages
+                with ideas, applies knowledge in meaningful ways, and grows through challenge.
+              </p>
+
+              <a class="rgpCopyCard__link" href="#">
+                <span class="rgpCopyCard__arrow">→</span>
+                DISCOVER WHO WE ARE
+              </a>
+            </div>
+          </div>
+
+          <div class="swiper-slide rgpCopyRail__slide" data-skin="s3">
+            <div class="rgpCopyCard">
+              <div class="rgpCopyCard__kicker">our Purpose</div>
+
+              <h2 class="rgpCopyCard__title">
+                WITH<br />
+                A PASSION TO<br />
+                SERVE OTHERS
+              </h2>
+
+              <p class="rgpCopyCard__text">
+                Grounded in our Christian foundation, we’re a community shaped by compassion and a commitment to serving
+                others. Students are encouraged to use their knowledge and talents to serve others.
+              </p>
+
+              <a class="rgpCopyCard__link" href="#">
+                <span class="rgpCopyCard__arrow">→</span>
+                DISCOVER WHO WE ARE
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- fallback note (only visible if swiper is missing) -->
+  <noscript>
+    <p style="padding:12px; text-align:center;">Enable JavaScript to view the slider.</p>
+  </noscript>
+</section>
+
+<style>
+  :root {
+    --rgp-s1: #ffc433; /* yellow */
+    --rgp-s2: #002855; /* navy */
+    --rgp-s3: #02223f; /* deep navy */
+  }
+
+  /* HARD reset to avoid "nothing visible" from external CSS */
+  .rgpRailDock, .rgpRailDock * { box-sizing: border-box; }
+  .rgpRailDock img { display:block; max-width:100%; }
+
+  .rgpRailDock{
+    width: 100%;
+    background: #fff;
+  }
+
+  /* layout */
+  .rgpRailDock__shell{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 695px;
+    min-height: 520px;
+    overflow: hidden;
+  }
+
+  /* left */
+  .rgpRailDock__mediaPane{
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+  }
+  .rgpMediaRail{ height: 100%; }
+  .rgpMediaRail__slide{ height: 100%; overflow:hidden; }
+  .rgpMediaRail__img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate3d(0,0,0);
+    will-change: transform;
+  }
+
+  /* right */
+  .rgpRailDock__copyPane{
+    position: relative;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background: var(--rgp-s1);
+  }
+
+  .rgpRailDock[data-rgp-skin="s1"] .rgpRailDock__copyPane{ background: var(--rgp-s1); }
+  .rgpRailDock[data-rgp-skin="s2"] .rgpRailDock__copyPane{ background: var(--rgp-s2); }
+  .rgpRailDock[data-rgp-skin="s3"] .rgpRailDock__copyPane{ background: var(--rgp-s3); }
+
+  /* text swiper must fill */
+  .rgpCopyRail{ width:100%; height:100%; }
+  .rgpCopyRail__slide{
+    height:100%;
+    display:grid;
+    place-items:center;
+    padding: clamp(22px, 4vw, 56px);
+  }
+  .rgpCopyRail .swiper-wrapper{
+    transition-timing-function: cubic-bezier(.22,1,.36,1) !important;
+  }
+
+  .rgpCopyCard{
+    width: min(520px, 90%);
+    text-align: center;
+    color: #101010;
+  }
+  .rgpRailDock[data-rgp-skin="s2"] .rgpCopyCard,
+  .rgpRailDock[data-rgp-skin="s3"] .rgpCopyCard{
+    color: #fff;
+  }
+
+  .rgpCopyCard__kicker{
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 14px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    opacity: .92;
+    margin-bottom: 18px;
+  }
+
+  .rgpCopyCard__title{
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 700;
+    font-size: clamp(34px, 3.3vw, 56px);
+    line-height: .95;
+    letter-spacing: .02em;
+    margin: 0 0 18px;
+    text-transform: uppercase;
+  }
+
+  .rgpCopyCard__text{
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: clamp(14px, 1.05vw, 18px);
+    line-height: 1.7;
+    margin: 0 auto;
+    max-width: 46ch;
+    opacity: .92;
+  }
+
+  .rgpCopyCard__link{
+    display:inline-flex;
+    align-items:center;
+    gap: 12px;
+    margin-top: 34px;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-decoration:none;
+    color: currentColor;
+    opacity: .96;
+  }
+  .rgpCopyCard__arrow{ font-size: 16px; transform: translateY(-1px); }
+
+  /* center nav */
+  .rgpRailDock__nav{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    display:grid;
+    gap:12px;
+    z-index: 9;
+    pointer-events: none;
+  }
+
+  .rgpNavOrb{
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    border: 0;
+    background: rgba(255,255,255,.98);
+    color: #111;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    pointer-events:auto;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .rgpNavOrb svg{ width: 22px; height: 22px; }
+  .rgpNavOrb:hover{ transform: translateY(-1px); box-shadow: 0 14px 34px rgba(0,0,0,.16); }
+
+  /* ✅ FAILSAFE: if Swiper is NOT initialized, show only first slide (so nothing is never blank) */
+  .rgpMediaRail:not(.swiper-initialized) .swiper-slide:not(:first-child),
+  .rgpCopyRail:not(.swiper-initialized) .swiper-slide:not(:first-child){
+    display:none;
+  }
+  .rgpMediaRail:not(.swiper-initialized) .swiper-wrapper,
+  .rgpCopyRail:not(.swiper-initialized) .swiper-wrapper{
+    transform:none !important;
+  }
+
+  /* responsive */
+  @media (max-width: 991px){
+    .rgpRailDock__shell{
+      grid-template-columns: 1fr;
+      height:auto;
+    }
+    .rgpRailDock__mediaPane{
+      height: 56vh;
+      min-height: 360px;
+    }
+    .rgpRailDock__copyPane{
+      min-height: 420px;
+    }
+    .rgpRailDock__nav{
+      top: calc(56vh - 10px);
+    }
+  }
+</style>
+
+<!-- Swiper JS (must load) -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  (function(){
+    const dock = document.querySelector(".rgpRailDock");
+    if(!dock) return;
+
+    // If Swiper didn't load for any reason, keep fallback visible.
+    if(typeof Swiper === "undefined"){
+      console.warn("Swiper not loaded. Check CDN or network.");
+      return;
+    }
+
+    const copyRail = new Swiper(".rgpCopyRail", {
+      direction: "vertical",
+      effect: "slide",
+      speed: 900,
+      allowTouchMove: false,
+      watchSlidesProgress: true,
+    });
+
+    const mediaRail = new Swiper(".rgpMediaRail", {
+      direction: "vertical",
+      speed: 900,
+      parallax: true,
+      slidesPerView: 1,
+      watchSlidesProgress: true,
+      navigation: {
+        nextEl: ".rgpNavOrb--next",
+        prevEl: ".rgpNavOrb--prev",
+      },
+      on: {
+        init(sw){
+          const skin = sw.activeIndex === 0 ? "s1" : sw.activeIndex === 1 ? "s2" : "s3";
+          dock.setAttribute("data-rgp-skin", skin);
+        },
+        slideChange(sw){
+          const skin = sw.activeIndex === 0 ? "s1" : sw.activeIndex === 1 ? "s2" : "s3";
+          dock.setAttribute("data-rgp-skin", skin);
+        }
+      }
+    });
+
+    // sync
+    mediaRail.controller.control = copyRail;
+    copyRail.controller.control = mediaRail;
+  })();
+</script>
+
+
+</body>
+
+</html>

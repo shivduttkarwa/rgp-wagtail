@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RealGold Properties — Services</title>
+
+  <!-- Fonts close to the feel; you can swap later -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:wght@400;700&family=Bricolage+Grotesque:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Vibrant Beige Theme */
+      --rg-beige-light: #FFF8F0;
+      --rg-beige: #F5EFE6;
+      --rg-beige-dark: #E8DCC8;
+      --rg-beige-darker: #D4C4B0;
+
+      /* Text Colors */
+      --rg-text-dark: #2C1810;
+      --rg-text-medium: #5C4D42;
+      --rg-text-light: #8B7968;
+
+      /* Accent Colors */
+      --rg-gold: #D4A056;
+      --rg-amber: #E78B48;
+      --rg-crimson: #C85A47;
+
+      /* Legacy support (updated to beige theme) */
+      --rg-navy: #3E2C24;
+      --rg-dark: #F5EFE6;
+      --rg-darker: #FFF8F0;
+      --rg-ink: #2C1810;
+      --rg-ink-2: rgba(44, 24, 16, 0.72);
+
+      /* Layout */
+      --rg-max: 90rem;
+      --rg-pad: clamp(1.5rem, 4vw, 3rem);
+      --rg-radius: 1.125rem;
+
+      /* Fonts */
+      --font-title: "Bona Nova SC", serif;
+      --font-body: "Bricolage Grotesque", sans-serif;
+
+      /* Extended theme (About page) */
+      --bg: #f7f0de; /* warm cream */
+      --ink: #2d3b2f; /* body text */
+      --green: #3f6248; /* primary green */
+      --green-2: #355a41; /* darker */
+      --line: rgba(63, 98, 72, 0.22); /* dividers */
+      --accent: #bf6d2d; /* warm orange */
+      --max: 1180px; /* content width */
+      --pad: clamp(18px, 2.2vw, 30px);
+      --radius: 14px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--font-body);
+      color: var(--rg-text-dark);
+      background: var(--rg-beige-light);
+    }
+
+    /* ---------- layout helpers ---------- */
+    .wrap{
+      width: min(var(--max), calc(100% - (var(--rg-pad) * 2)));
+      margin: 0 auto;
+    }
+
+    /* Subtle vertical grid like Vista */
+    .grid-bg{
+      background-color: var(--rg-beige-light);
+      background-image:
+        repeating-linear-gradient(
+          to right,
+          rgba(44,24,16,.00) 0,
+          rgba(44,24,16,.00) calc((100%/12) - 1px),
+          rgba(44,24,16,.06) calc((100%/12) - 1px),
+          rgba(44,24,16,.06) calc((100%/12))
+        );
+      background-size: 100% 100%;
+      background-position: center;
+    }
+
+    /* ---------- hero ---------- */
+    .hero{
+      position:relative;
+      width:100%;
+      min-height: clamp(540px, 74vh, 740px);
+      overflow:hidden;
+
+      /* Vista-style: big radius bottom-left */
+      border-bottom-left-radius: 86px;
+      border-bottom-right-radius: 18px;
+
+      background: #000;
+    }
+    .hero__bg{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      filter: saturate(1.04) contrast(1.04);
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(90deg,
+          rgba(44,24,16,.58) 0%,
+          rgba(44,24,16,.32) 44%,
+          rgba(44,24,16,.00) 76%
+        );
+      pointer-events:none;
+    }
+    .hero__inner{
+      position:relative;
+      z-index:2;
+      padding: clamp(44px, 6.5vw, 96px) var(--rg-pad);
+      height:100%;
+      display:flex;
+      align-items:center;
+    }
+    .hero__copy{ max-width: 820px; }
+    .hero__eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap: 12px;
+      font-size: 14px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,248,240,.86);
+      margin-bottom: 18px;
+    }
+    .hero__eyebrow::before{
+      content:"";
+      width: 46px;
+      height: 1px;
+      background: rgba(212,160,86,.9);
+      display:block;
+      transform: translateY(1px);
+    }
+    .hero__h1{
+      font-family: var(--font-title);
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: .96;
+      margin: 0 0 18px;
+      font-size: clamp(52px, 6vw, 92px);
+    }
+    .hero__h1 em{
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(255,248,240,.92);
+    }
+    .hero__sub{
+      max-width: 520px;
+      color: rgba(255,248,240,.78);
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0 0 26px;
+    }
+
+    /* Buttons Vista-like (pill + arrow) */
+    .btn-row{ display:flex; gap:14px; flex-wrap:wrap; }
+    .btn{
+      appearance:none;
+      border: 1px solid rgba(44,24,16,.22);
+      background: rgba(255,248,240,.92);
+      color: var(--rg-text-dark);
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-size: 14px;
+      letter-spacing: .01em;
+      display:inline-flex;
+      gap:12px;
+      align-items:center;
+      cursor:pointer;
+      text-decoration:none;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      min-width: 220px;
+      justify-content: center;
+      box-shadow: 0 10px 24px rgba(44,24,16,.10);
+    }
+    .btn:hover{ transform: translateY(-1px); background:#fff; border-color: rgba(44,24,16,.30); }
+    .btn:active{ transform: translateY(0px); }
+
+    .btn--dark{
+      background: #1b110c;
+      border-color: #1b110c;
+      color: rgba(255,248,240,.96);
+    }
+    .btn--dark:hover{ background:#120b08; border-color:#120b08; }
+
+    .btn--outline{
+      background: transparent;
+      border-color: rgba(255,248,240,.52);
+      color: rgba(255,248,240,.92);
+      box-shadow: none;
+    }
+    .btn--outline:hover{ background: rgba(255,248,240,.12); }
+
+    .arrow{ width:16px; height:16px; display:inline-block; }
+    .arrow svg{ width:100%; height:100%; display:block; }
+
+    /* ---------- section base ---------- */
+    .section{ padding: clamp(46px, 6vw, 84px) 0; }
+    .paper{ background: var(--rg-beige-light); }
+    .sand{ background: var(--rg-beige); }
+    .sand-2{ background: var(--rg-beige-dark); }
+
+    /* Intro big paragraph */
+    .intro{
+      padding-top: clamp(36px, 5vw, 70px);
+      padding-bottom: clamp(26px, 4vw, 54px);
+    }
+    .intro__p{
+      font-size: clamp(24px, 3vw, 42px);
+      letter-spacing: -0.015em;
+      line-height: 1.12;
+      margin: 0 0 34px;
+      max-width: 1040px;
+      color: var(--rg-text-dark);
+      font-weight: 400;
+    }
+    .intro__p em{
+      font-family: var(--font-title);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rg-text-dark);
+    }
+
+    .img-wide{
+      width:100%;
+      border-radius: 22px;
+      overflow:hidden;
+      background:#ddd;
+      box-shadow: 0 12px 30px rgba(44,24,16,.10);
+      border: 1px solid rgba(44,24,16,.08);
+    }
+    .img-wide img{
+      width:100%;
+      height: clamp(320px, 42vw, 460px);
+      object-fit: cover;
+      display:block;
+    }
+
+    /* ---------- Split sections with Watermarks ---------- */
+    .split{
+      position: relative;
+      padding: clamp(58px, 7vw, 96px) 0;
+      overflow:hidden;
+    }
+    .split__grid{
+      display:grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: clamp(22px, 4vw, 64px);
+      align-items:center;
+    }
+    .split--reverse .split__grid{
+      grid-template-columns: .92fr 1.08fr;
+    }
+
+    .card-img{
+      border-radius: 22px;
+      overflow:hidden;
+      background:#ddd;
+      box-shadow: 0 12px 34px rgba(44,24,16,.12);
+      border: 1px solid rgba(44,24,16,.08);
+    }
+    .card-img img{
+      width:100%;
+      height: clamp(380px, 34vw, 520px);
+      object-fit: cover;
+      display:block;
+    }
+
+    /* Heading line + small watermark label (this is the "watermark title" people notice) */
+    .kicker{
+      display:flex;
+      align-items:center;
+      gap: 14px;
+      margin: 0 0 6px;
+      font-size: 18px;
+      color: var(--rg-text-dark);
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      position: relative;
+    }
+    .kicker::before{
+      content:"";
+      width: 44px;
+      height: 1px;
+      background: var(--rg-gold);
+      display:block;
+      transform: translateY(1px);
+      opacity: .9;
+    }
+
+    /* Small watermark title (top-right of the text column) */
+    .wm-title{
+      display:inline-block;
+      margin-left:auto;
+      font-size: 12px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(92,77,66,.58);
+      transform: translateY(2px);
+      white-space: nowrap;
+    }
+
+    .h2{
+      margin: 0 0 12px;
+      font-size: clamp(44px, 4.4vw, 70px);
+      letter-spacing: -0.02em;
+      line-height: .95;
+      font-weight: 400;
+      color: var(--rg-text-dark);
+      font-family: var(--font-body);
+    }
+    .h2 .serif{
+      font-family: var(--font-title);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rg-text-dark);
+    }
+
+    .body{
+      margin: 0;
+      max-width: 560px;
+      color: var(--rg-text-medium);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .split__actions{ margin-top: 24px; }
+
+    /* BIG outlined watermark word behind (this was missing in your version) */
+    .watermark{
+      position:absolute;
+      inset: 0;
+      pointer-events:none;
+      z-index: 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .watermark span{
+      font-family: var(--font-body);
+      font-weight: 600;
+      letter-spacing: -0.08em;
+      font-size: clamp(150px, 16.5vw, 340px);
+
+      /* outlined look */
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(44,24,16,.10);
+      text-stroke: 1px rgba(44,24,16,.10);
+
+      /* subtle */
+      opacity: 1;
+      transform: translateX(-6%);
+      white-space: nowrap;
+    }
+    .split--reverse .watermark span{ transform: translateX(6%); }
+
+    .split__grid > *{ position: relative; z-index: 1; }
+
+    /* ---------- Services grid ---------- */
+    .services{
+      background: var(--rg-beige);
+      padding: clamp(52px, 6vw, 90px) 0;
+      position: relative;
+      overflow:hidden;
+    }
+    .services .wrap{ position: relative; z-index: 1; }
+    .services__title{
+      margin: 0 0 28px;
+      font-size: clamp(22px, 2.2vw, 28px);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--rg-text-dark);
+      max-width: 980px;
+    }
+
+    .svc-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .svc{
+      background: rgba(255,248,240,.72);
+      border: 1px solid rgba(44,24,16,.10);
+      border-radius: 14px;
+      padding: 22px 22px;
+      min-height: 140px;
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+      box-shadow: 0 14px 30px rgba(44,24,16,.08);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .svc:hover{
+      transform: translateY(-2px);
+      background: rgba(255,248,240,.88);
+      box-shadow: 0 18px 40px rgba(44,24,16,.12);
+    }
+
+    .svc.svc--wide{ grid-column: span 2; min-height: 150px; }
+
+    .svc__icon{
+      width: 30px; height: 30px;
+      color: rgba(212,160,86,.95);
+    }
+    .svc__name{
+      margin:0;
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      color: var(--rg-text-dark);
+    }
+    .svc__hint{
+      margin: -6px 0 0;
+      color: rgba(92,77,66,.72);
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 42ch;
+    }
+
+    /* subtle huge watermark behind services */
+    .services::after{
+      content:"Services";
+      position:absolute;
+      left: -2%;
+      bottom: -34%;
+      font-family: var(--font-body);
+      font-weight: 600;
+      letter-spacing: -0.10em;
+      font-size: clamp(200px, 20vw, 440px);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(44,24,16,.10);
+      pointer-events:none;
+    }
+
+    /* ---------- CTA band ---------- */
+    .cta{
+      background: var(--rg-beige);
+      padding: clamp(56px, 7vw, 96px) 0;
+      position: relative;
+      overflow:hidden;
+      border-top: 1px solid rgba(44,24,16,.08);
+    }
+    .cta__kicker{
+      display:flex; align-items:center; gap:14px;
+      font-size: 18px;
+      margin:0 0 6px;
+      color: var(--rg-text-dark);
+    }
+    .cta__kicker::before{
+      content:"";
+      width:44px; height:1px;
+      background: var(--rg-gold);
+      transform: translateY(1px);
+      opacity:.9;
+    }
+    .cta__h2{
+      margin:0 0 10px;
+      font-size: clamp(54px, 6vw, 84px);
+      letter-spacing:-0.03em;
+      line-height:.95;
+      font-weight: 400;
+      color: var(--rg-text-dark);
+    }
+    .cta__h2 .serif{
+      font-family: var(--font-title);
+      font-style: italic;
+      font-weight: 400;
+    }
+    .cta__sub{
+      margin:0 0 22px;
+      color: rgba(92,77,66,.78);
+      font-size: 14px;
+    }
+
+    /* Big “RG” watermark on right (replacing Vista AV) */
+    .cta__mark{
+      position:absolute;
+      right: -8%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(980px, 64vw);
+      height: auto;
+      opacity: .34;
+      pointer-events:none;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 980px){
+      .split__grid{ grid-template-columns: 1fr; }
+      .split--reverse .split__grid{ grid-template-columns: 1fr; }
+      .watermark span{ transform: translateX(0); }
+      .svc-grid{ grid-template-columns: 1fr 1fr; }
+      .svc.svc--wide{ grid-column: span 2; }
+      .wm-title{ margin-left: 0; }
+    }
+    @media (max-width: 640px){
+      .hero{ border-bottom-left-radius: 54px; }
+      .btn{ min-width: 100%; }
+      .intro__p{ line-height: 1.16; }
+      .svc-grid{ grid-template-columns: 1fr; }
+      .svc.svc--wide{ grid-column: span 1; }
+      .cta__mark{ right:-24%; opacity:.26; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO (ignore header/footer, so this starts right away) -->
+  <section class="hero">
+    <!-- You can swap to your own RealGold image later -->
+    <img
+      class="hero__bg"
+      src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=2400&q=85"
+      alt="RealGold Properties"
+      loading="eager"
+    />
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <div class="hero__eyebrow">RealGold Properties • Services</div>
+        <h1 class="hero__h1">Delivering <em>clarity</em><br/>from deal to doorstep</h1>
+        <p class="hero__sub">
+          A vertically integrated approach across acquisition, planning, construction, and management —
+          designed to protect capital, reduce friction, and elevate the end-user experience.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn btn--dark" href="#">
+            View Services
+            <span class="arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+
+          <a class="btn btn--outline" href="#">
+            Talk to Us
+            <span class="arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="section intro grid-bg">
+    <div class="wrap">
+      <p class="intro__p">
+        At RealGold Properties, we combine <em>market intelligence</em>, disciplined underwriting,
+        and hands-on execution to deliver assets that perform — with decisions guided by
+        <em>detail</em>, <em>speed</em>, and <em>integrity</em>.
+      </p>
+
+      <div class="img-wide">
+        <img
+          src="https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=2400&q=85"
+          alt="Modern property"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- STRATEGY -->
+  <section class="split grid-bg">
+    <div class="watermark" aria-hidden="true"><span>strategy</span></div>
+
+    <div class="wrap">
+      <div class="split__grid">
+        <div class="card-img">
+          <img
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=85"
+            alt="Investment strategy"
+            loading="lazy"
+          />
+        </div>
+
+        <div>
+          <div class="kicker">
+            Investing with intent
+            <span class="wm-title">STRATEGY</span>
+          </div>
+
+          <h2 class="h2"><span class="serif">Underwriting</span> &amp; Due Diligence</h2>
+
+          <p class="body">
+            We move fast, but never blindly. RealGold evaluates every opportunity across
+            demand drivers, tenant quality, replacement cost, cashflow durability and exit optionality.
+            Our diligence is built to uncover risks early — so you don’t pay for surprises later.
+          </p>
+
+          <div class="split__actions">
+            <a class="btn" href="#">
+              Request a service deck
+              <span class="arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERY (reverse) -->
+  <section class="split split--reverse grid-bg">
+    <div class="watermark" aria-hidden="true"><span>delivery</span></div>
+
+    <div class="wrap">
+      <div class="split__grid">
+        <div>
+          <div class="kicker">
+            Delivering on details
+            <span class="wm-title">DELIVERY</span>
+          </div>
+
+          <h2 class="h2"><span class="serif">Planning</span>, Design &amp; Execution</h2>
+
+          <p class="body">
+            From feasibility through approvals and build coordination, we manage complexity with a
+            clear timeline and measurable milestones. We work with trusted consultants and contractors
+            to protect schedule, control cost, and maintain finish quality — without sacrificing function.
+          </p>
+
+          <div class="split__actions">
+            <a class="btn" href="#">
+              Explore delivery workflow
+              <span class="arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+
+        </div>
+
+        <div class="card-img">
+          <img
+            src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=2400&q=85"
+            alt="Execution"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATIONSHIPS -->
+  <section class="split grid-bg">
+    <div class="watermark" aria-hidden="true"><span>relationships</span></div>
+
+    <div class="wrap">
+      <div class="split__grid">
+        <div class="card-img">
+          <img
+            src="https://images.unsplash.com/photo-1560448075-bb485b067938?auto=format&fit=crop&w=2400&q=85"
+            alt="Resident experience"
+            loading="lazy"
+          />
+        </div>
+
+        <div>
+          <div class="kicker">
+            Built on trust
+            <span class="wm-title">CARE</span>
+          </div>
+
+          <h2 class="h2">
+            <span class="serif">Property</span> Management &amp; Leasing Support
+          </h2>
+
+          <p class="body">
+            Great assets stay great through consistent operations. We support leasing, tenant experience,
+            preventative maintenance and reporting — keeping properties stable, attractive and efficient
+            for the long run.
+          </p>
+
+          <div class="split__actions">
+            <a class="btn" href="#">
+              Discuss management
+              <span class="arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES GRID -->
+  <section class="services">
+    <div class="wrap">
+      <p class="services__title">
+        A complete service stack — designed for smooth acquisition, clean execution, and performance-focused operations.
+      </p>
+
+      <div class="svc-grid">
+        <div class="svc">
+          <svg class="svc__icon" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3l7 7-7 7-7-7 7-7z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M9.5 10.5h5v5h-5v-5z" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          <p class="svc__name">Underwriting<br>&amp; Due Diligence</p>
+          <p class="svc__hint">Valuation, risk review, comps, tenant and location scoring.</p>
+        </div>
+
+        <div class="svc">
+          <svg class="svc__icon" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6h12v12H6V6z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M8 9h8M8 12h8M8 15h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <p class="svc__name">Acquisition<br>&amp; Deal Structuring</p>
+          <p class="svc__hint">Negotiation, term review, closing coordination and strategy.</p>
+        </div>
+
+        <div class="svc">
+          <svg class="svc__icon" viewBox="0 0 24 24" fill="none">
+            <path d="M7 6h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M8 10h8v10H8V10z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M10 13h4M10 16h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <p class="svc__name">Pre-development<br>&amp; Approvals</p>
+          <p class="svc__hint">Feasibility, consultant coordination, entitlement support.</p>
+        </div>
+
+        <div class="svc svc--wide">
+          <svg class="svc__icon" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16v12H4V7z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M4 11h16" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M7 19V7" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          <p class="svc__name">Construction<br>&amp; Project Management</p>
+          <p class="svc__hint">Budget control, timeline tracking, QA reviews, handover planning.</p>
+        </div>
+
+        <div class="svc svc--wide">
+          <svg class="svc__icon" viewBox="0 0 24 24" fill="none">
+            <path d="M6 5h7v14H6V5z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M15 9h3v10h-3V9z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M9 8h1M9 11h1M9 14h1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <p class="svc__name">Property<br>Management</p>
+          <p class="svc__hint">Tenant support, maintenance oversight, reporting and performance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <!-- Big “RG” watermark -->
+    <svg class="cta__mark" viewBox="0 0 1200 520" fill="none" aria-hidden="true">
+      <!-- stylized RG monogram lines -->
+      <path d="M220 420V120c0-40 32-72 72-72h210c78 0 142 64 142 142s-64 142-142 142H340"
+            stroke="rgba(212,160,86,1)" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M650 420V120c0-40 32-72 72-72h240"
+            stroke="rgba(212,160,86,1)" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M960 420l-180-180"
+            stroke="rgba(212,160,86,1)" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <div class="wrap">
+      <div class="cta__kicker">Let’s build your</div>
+      <h2 class="cta__h2"><span class="serif">next</span> move</h2>
+      <p class="cta__sub">Tell us what you’re planning — we’ll recommend the best service path and timeline.</p>
+
+      <div class="btn-row">
+        <a class="btn btn--dark" href="#">
+          Get a Quote
+          <span class="arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+
+        <a class="btn" href="#">
+          Book a Call
+          <span class="arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

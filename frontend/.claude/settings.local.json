@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(git remote:*)",
+      "Bash(git push:*)",
+      "Bash(echo No workflows found:*)"
+    ]
+  }
+}
