@@ -31,12 +31,17 @@ const Intro = ({
   ctaSecondaryUrl,
   stats,
 }: IntroProps) => {
-  const normalizeHeadlineHtml = (html?: string) => {
+  const richTextToPlain = (html?: string) => {
     if (!html) return "";
     return html
-      .replace(/^<p>/i, "")
-      .replace(/<\/p>$/i, "")
-      .replace(/<\/p>\s*<p>/gi, "<br/>");
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<\/p>\s*<p>/gi, "\n\n")
+      .replace(/<[^>]+>/g, "")
+      .replace(/&nbsp;/gi, " ")
+      .replace(/&amp;/gi, "&")
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">")
+      .trim();
   };
 
   const resolveUrl = (value?: string) => {
@@ -48,7 +53,18 @@ const Intro = ({
   const primaryTarget = ctaPrimaryUrl?.trim() || "/contact";
   const secondaryTarget = ctaSecondaryUrl?.trim() || "/about";
   const introImage = resolveUrl(imageUrl) || `${base}images/rahul-singh.jpg`;
-  const normalizedHeadline = normalizeHeadlineHtml(headlineHtml);
+  const normalizedHeadline = richTextToPlain(headlineHtml);
+  const normalizedBody = richTextToPlain(bodyHtml);
+  const renderHeadlineLine = (line: string) => {
+    const founderMatch = line.match(/^(.*?)(\s*[-—]\s*Rahul Singh)\s*$/i);
+    if (!founderMatch) return line;
+    return (
+      <>
+        {founderMatch[1]}
+        <span className="founder">{founderMatch[2]}</span>
+      </>
+    );
+  };
   const statItems =
     stats?.filter((item) => item.value || item.label) ?? [
       { value: "$885k", label: "Median sold price" },
@@ -111,8 +127,14 @@ const Intro = ({
             className="intro-headline"
             data-gsap="char-reveal"
             data-gsap-start="top 85%"
-            dangerouslySetInnerHTML={{ __html: normalizedHeadline }}
-          />
+          >
+            {normalizedHeadline.split("\n").map((line, i, arr) => (
+              <span key={`headline-line-${i}`}>
+                {renderHeadlineLine(line)}
+                {i < arr.length - 1 ? <br /> : null}
+              </span>
+            ))}
+          </h1>
         ) : (
           <h1
             className="intro-headline"
@@ -126,13 +148,20 @@ const Intro = ({
           </h1>
         )}
 
-        {bodyHtml ? (
-          <div
-            className="intro-text"
-            data-gsap="fade-up"
-            data-gsap-delay="0.2"
-            dangerouslySetInnerHTML={{ __html: bodyHtml }}
-          />
+        {normalizedBody ? (
+          <div className="intro-text" data-gsap="fade-up" data-gsap-delay="0.2">
+            {normalizedBody.split("\n\n").map((paragraph, index) => (
+              <span key={`body-paragraph-${index}`}>
+                {paragraph}
+                {index < normalizedBody.split("\n\n").length - 1 ? (
+                  <>
+                    <br />
+                    <br />
+                  </>
+                ) : null}
+              </span>
+            ))}
+          </div>
         ) : (
           <div className="intro-text" data-gsap="fade-up" data-gsap-delay="0.2">
             Real Gold Properties is a vision turned reality - a private equity
