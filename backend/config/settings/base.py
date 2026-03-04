@@ -41,6 +41,7 @@ WAGTAIL_I18N_ENABLED = True
 
 INSTALLED_APPS = [
     "home",
+    "listings",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",

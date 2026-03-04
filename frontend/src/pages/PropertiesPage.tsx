@@ -19,6 +19,7 @@ import {
 } from "../components/reusable/PropertyCard";
 import { allProperties } from "../data/listingProperties";
 import { initGsapSwitchAnimations } from "@/lib/gsapSwitchAnimations";
+import { fetchListings } from "@/lib/listingsApi";
 import "./PropertiesPage.css";
 import "../sections/ServiceSelection.css";
 
@@ -125,6 +126,7 @@ export default function PropertiesPage() {
   const [displayedFilters, setDisplayedFilters] =
     useState<Filters>(DEFAULT_FILTERS);
   const [isExiting, setIsExiting] = useState(false);
+  const [properties, setProperties] = useState<Property[]>(allProperties);
 
   const pendingRef = useRef<Filters>(DEFAULT_FILTERS);
   const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -160,6 +162,20 @@ export default function PropertiesPage() {
     }
   }, [activeFilters.cat]);
 
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      const cmsListings = await fetchListings();
+      if (!cancelled && cmsListings?.length) {
+        setProperties(cmsListings);
+      }
+    };
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   // ── Filter Change Handler ────────────────────────────────────────────────
   const changeFilters = (patch: Partial<Filters>) => {
     const next = { ...pendingRef.current, ...patch };
@@ -187,13 +203,13 @@ export default function PropertiesPage() {
   // ── Data ─────────────────────────────────────────────────────────────────
   // filtered/displayed are from displayedFilters (what the grid actually shows)
   const filtered = useMemo(
-    () => applyFilters(allProperties, displayedFilters),
-    [displayedFilters],
+    () => applyFilters(properties, displayedFilters),
+    [displayedFilters, properties],
   );
   // activeFiltered is for the result count badge (updates immediately)
   const activeFiltered = useMemo(
-    () => applyFilters(allProperties, activeFilters),
-    [activeFilters],
+    () => applyFilters(properties, activeFilters),
+    [activeFilters, properties],
   );
 
   const displayed = displayedFilters.showAll

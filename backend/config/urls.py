@@ -17,6 +17,7 @@ urlpatterns = [
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("api/v2/", api_router.urls),
+    path("api/v2/listings/", include("listings.urls")),
 ]
 
 if settings.DEBUG:
