@@ -51,10 +51,19 @@ export function getImageUrl(image?: WagtailImage): string | undefined {
 
 export async function fetchHomePage(): Promise<HomePageApi | null> {
   const url = `${apiBase}/pages/?type=home.HomePage&fields=title,slug,body&limit=1`;
-  const res = await fetch(url);
-  if (!res.ok) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) {
+      return null;
+    }
+    const data = (await res.json()) as WagtailApiResponse<HomePageApi>;
+    return data.items?.[0] ?? null;
+  } catch {
     return null;
+  } finally {
+    clearTimeout(timeout);
   }
-  const data = (await res.json()) as WagtailApiResponse<HomePageApi>;
-  return data.items?.[0] ?? null;
 }
