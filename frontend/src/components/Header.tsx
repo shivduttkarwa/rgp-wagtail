@@ -22,6 +22,7 @@ export default function Header({ ready = false }: { ready?: boolean }) {
 
   // Close mobile nav on route change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- route change should close menu
     setMobileOpen(false);
   }, [location.pathname]);
 

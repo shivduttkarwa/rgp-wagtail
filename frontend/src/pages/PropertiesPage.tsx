@@ -25,6 +25,10 @@ import "../sections/ServiceSelection.css";
 // ─── Constants ────────────────────────────────────────────────────────────────
 const INITIAL_COUNT = 6;
 
+type IsotopeInstance = {
+  destroy: () => void;
+};
+
 type Filters = {
   cat: "all" | Category;
   price: string;
@@ -125,7 +129,7 @@ export default function PropertiesPage() {
   const pendingRef = useRef<Filters>(DEFAULT_FILTERS);
   const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const isoRef = useRef<any>(null);
+  const isoRef = useRef<IsotopeInstance | null>(null);
   const filterTabsRef = useRef<HTMLDivElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
   const pillInitialized = useRef(false);
@@ -204,7 +208,7 @@ export default function PropertiesPage() {
   // transitionDuration:0 — CSS animations handle all visual transitions
   useLayoutEffect(() => {
     if (!gridRef.current || displayed.length === 0) return;
-    let iso: any = null;
+    let iso: IsotopeInstance | null = null;
     const timer = setTimeout(() => {
       if (!gridRef.current) return;
       import("isotope-layout").then(({ default: Isotope }) => {

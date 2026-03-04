@@ -101,7 +101,7 @@ const defaultProjects: ShowcaseProject[] = [
 
 const PortfolioShowcase: React.FC<PortfolioShowcaseProps> = ({
   projects = defaultProjects,
-  heading: _heading = "Featured Properties",
+  heading = "Featured Properties",
 }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
@@ -178,7 +178,7 @@ const PortfolioShowcase: React.FC<PortfolioShowcaseProps> = ({
           REAL GOLD PROPERTIES
         </span>
         <h3 data-gsap="char-reveal" className="rg-section-title">
-          Featured <em>Properties</em>
+          {heading}
         </h3>
         <p
           data-gsap="fade-up"

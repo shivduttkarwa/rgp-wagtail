@@ -113,6 +113,12 @@ export default function Timeline() {
   const [steps, setSteps] = useState<Step[]>(ALL_STEPS);
   const [isMobile, setIsMobile] = useState(false);
 
+  function activateStep(index: number, panels: HTMLDivElement[]) {
+    if (currentActiveRef.current === index) return;
+    currentActiveRef.current = index;
+    panels.forEach((p, i) => p.classList.toggle("rg-active", i === index));
+  }
+
   useEffect(() => {
     const media = window.matchMedia("(max-width: 32.5rem)");
     const applySteps = () => {
@@ -360,13 +366,7 @@ export default function Timeline() {
       window.removeEventListener("resize", setTrackBounds);
       media.removeEventListener("change", applySteps);
     };
-  }, [steps]);
-
-  function activateStep(index: number, panels: HTMLDivElement[]) {
-    if (currentActiveRef.current === index) return;
-    currentActiveRef.current = index;
-    panels.forEach((p, i) => p.classList.toggle("rg-active", i === index));
-  }
+  }, [steps, isMobile]);
 
   return (
     <div className="rg-root">

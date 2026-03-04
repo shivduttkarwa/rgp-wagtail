@@ -2,14 +2,9 @@ import React, { useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import OverLayMenu from "./OverLayMenu";
-import { SiteSettings } from "../../services/api";
 import HomeLogo from "../UI/HomeLogo";
 
-interface HeaderProps {
-  settings: SiteSettings | null;
-}
-
-const Header: React.FC<HeaderProps> = ({ settings }) => {
+const Header: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const headerBgRef = useRef<HTMLDivElement>(null);
   const location = useLocation();

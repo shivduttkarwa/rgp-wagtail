@@ -79,12 +79,13 @@ export default function HomePage({ ready = false }: { ready?: boolean }) {
         bgVideo={heroContent?.bg_video_url}
         bgPoster={getImageUrl(heroContent?.bg_video_poster)}
         ctaOnClick={() => {
-          const target = heroContent?.cta_url || "/properties";
-          if (/^https?:\\/\\//i.test(target)) {
+          const target = heroContent?.cta_url?.trim();
+          const fallback = "/properties";
+          if (target && /^https?:\/\//i.test(target)) {
             window.location.href = target;
             return;
           }
-          navigate(target);
+          navigate(target || fallback);
         }}
       />
 

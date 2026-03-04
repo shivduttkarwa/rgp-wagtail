@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Menu.css";
 
@@ -33,12 +33,15 @@ export default function Menu({ isOpen, onOpenChange, showButton = true }: MenuPr
       )
     : [];
 
-  const setOpen = (next: boolean) => {
+  const setOpen = useCallback((next: boolean) => {
     if (!isControlled) {
       setInternalOpen(next);
     }
     onOpenChange?.(next);
-  };
+    if (!next) {
+      setQuery("");
+    }
+  }, [isControlled, onOpenChange]);
 
   const toggleMenu = () => {
     setOpen(!open);
@@ -57,7 +60,7 @@ export default function Menu({ isOpen, onOpenChange, showButton = true }: MenuPr
 
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, [open]);
+  }, [open, setOpen]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -78,9 +81,7 @@ export default function Menu({ isOpen, onOpenChange, showButton = true }: MenuPr
     };
   }, [open]);
 
-  useEffect(() => {
-    if (!open) setQuery("");
-  }, [open]);
+  
 
   return (
     <>

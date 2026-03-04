@@ -24,7 +24,7 @@ export default function BtnSecondary({
         ? `${height}px`
         : height
       : "auto",
-    // @ts-ignore - CSS custom properties
+    // @ts-expect-error -- CSS custom properties aren't in React's typing
     "--btn-secondary-color": color,
   };
 

@@ -47,7 +47,7 @@ export default function HeroSection({
   const publicUrl = import.meta.env.BASE_URL || "/";
   const resolveUrl = (path?: string) => {
     if (!path) return path;
-    if (/^https?:\\/\\//i.test(path) || path.startsWith(\"//\")) return path;
+    if (/^https?:\/\//i.test(path) || path.startsWith("//")) return path;
     return `${publicUrl}${path}`;
   };
   const bgRef = useRef<HTMLDivElement>(null);

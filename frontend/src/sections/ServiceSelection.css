@@ -113,39 +113,57 @@
   background-color: #f9c307;
   border: 0.0625rem solid transparent;
 }
-.svc-card--buy .svc-card__word { color: #0f1870; }
-.svc-card--buy .svc-card__desc { color: rgba(15, 24, 112, 0.7); }
+.svc-card--buy .svc-card__word {
+  color: #0f1870;
+}
+.svc-card--buy .svc-card__desc {
+  color: rgba(15, 24, 112, 0.7);
+}
 .svc-card--buy .svc-card__btn {
   background-color: #0f1870;
   color: #f9c307;
 }
-.svc-card--buy .svc-card__btn:hover { background-color: #162496; }
+.svc-card--buy .svc-card__btn:hover {
+  background-color: #162496;
+}
 
 /* Sell Card */
 .svc-card--sell {
   background-color: #0f1870;
   border: 0.0625rem solid transparent;
 }
-.svc-card--sell .svc-card__word { color: #f9c307; }
-.svc-card--sell .svc-card__desc { color: rgba(255, 255, 255, 0.65); }
+.svc-card--sell .svc-card__word {
+  color: #f9c307;
+}
+.svc-card--sell .svc-card__desc {
+  color: rgba(255, 255, 255, 0.65);
+}
 .svc-card--sell .svc-card__btn {
   background-color: #f9c307;
   color: #0f1870;
 }
-.svc-card--sell .svc-card__btn:hover { background-color: #fad840; }
+.svc-card--sell .svc-card__btn:hover {
+  background-color: #fad840;
+}
 
 /* Rent Card */
 .svc-card--rent {
   background-color: #fdf4e3;
   border: 0.0625rem solid rgba(15, 24, 112, 0.12);
 }
-.svc-card--rent .svc-card__word { color: #0f1870; }
-.svc-card--rent .svc-card__desc { color: var(--rg-text-medium); }
+.svc-card--rent .svc-card__word {
+  color: #0f1870;
+}
+.svc-card--rent .svc-card__desc {
+  color: var(--rg-text-medium);
+}
 .svc-card--rent .svc-card__btn {
   background-color: #0f1870;
   color: #ffffff;
 }
-.svc-card--rent .svc-card__btn:hover { background-color: #162496; }
+.svc-card--rent .svc-card__btn:hover {
+  background-color: #162496;
+}
 
 /* ===== Big Word ===== */
 .svc-card__word {

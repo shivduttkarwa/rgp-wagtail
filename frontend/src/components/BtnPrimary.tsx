@@ -25,7 +25,7 @@ export default function BtnPrimary({
         ? `${height}px`
         : height
       : "auto",
-    // @ts-ignore - CSS custom properties
+    // @ts-expect-error -- CSS custom properties aren't in React's typing
     "--btn-primary-color": color,
   };
 

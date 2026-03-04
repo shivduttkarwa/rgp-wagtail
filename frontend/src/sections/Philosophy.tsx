@@ -95,6 +95,7 @@ function TestiCard({
     v.pause();
     v.currentTime = 0;
     v.muted = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- sync playback state to active card
     setFullPlay(false);
   }, [activeId, fullPlay, t.title]);
 

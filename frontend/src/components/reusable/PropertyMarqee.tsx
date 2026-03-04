@@ -125,7 +125,7 @@ export default function PropertyMarquee() {
       hasIntent = false;
       viewport.classList.remove("rgMarquee_dragging");
 
-      let throwSpeed = clamp(velocity * 1000, -2200, 2200);
+      const throwSpeed = clamp(velocity * 1000, -2200, 2200);
       let inertia = throwSpeed;
       const decay = 0.92;
       const drift = () => {
@@ -137,11 +137,16 @@ export default function PropertyMarquee() {
       requestAnimationFrame(drift);
     };
 
-    viewport.addEventListener("pointerdown", onDown as any, { passive: false });
-    window.addEventListener("pointermove", onMove as any, { passive: false });
+    const onPointerDown = (e: PointerEvent) => onDown(e);
+    const onPointerMove = (e: PointerEvent) => onMove(e);
+    const onTouchStart = (e: TouchEvent) => onDown(e);
+    const onTouchMove = (e: TouchEvent) => onMove(e);
+
+    viewport.addEventListener("pointerdown", onPointerDown, { passive: false });
+    window.addEventListener("pointermove", onPointerMove, { passive: false });
     window.addEventListener("pointerup", onUp);
-    viewport.addEventListener("touchstart", onDown as any, { passive: false });
-    window.addEventListener("touchmove", onMove as any, { passive: false });
+    viewport.addEventListener("touchstart", onTouchStart, { passive: false });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
     window.addEventListener("touchend", onUp);
 
     let last = performance.now();
@@ -178,11 +183,11 @@ export default function PropertyMarquee() {
 
     return () => {
       cancelAnimationFrame(raf);
-      viewport.removeEventListener("pointerdown", onDown as any);
-      window.removeEventListener("pointermove", onMove as any);
+      viewport.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onUp);
-      viewport.removeEventListener("touchstart", onDown as any);
-      window.removeEventListener("touchmove", onMove as any);
+      viewport.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("touchend", onUp);
       window.removeEventListener("resize", onResize);
     };

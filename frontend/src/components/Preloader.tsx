@@ -66,10 +66,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       fadeDuration
     );
 
-    let hideTimer: ReturnType<typeof setTimeout>;
-    let removeTimer: ReturnType<typeof setTimeout>;
-
-    hideTimer = setTimeout(() => {
+    let removeTimer: ReturnType<typeof setTimeout> | null = null;
+    const hideTimer = setTimeout(() => {
       onCompleteRef.current?.();
       setIsExiting(true);
 
@@ -81,7 +79,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
     return () => {
       clearTimeout(hideTimer);
-      clearTimeout(removeTimer);
+      if (removeTimer) clearTimeout(removeTimer);
     };
   }, []);
 

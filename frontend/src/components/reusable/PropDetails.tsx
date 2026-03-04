@@ -429,7 +429,6 @@ const formatPhoneDisplay = (phone: string): string => {
 const HeroSlider: React.FC<{
   images: PropertyImage[];
   title: string;
-  address: string;
   fullAddress: string;
   price: number;
   priceLabel?: string;
@@ -438,7 +437,6 @@ const HeroSlider: React.FC<{
 }> = ({
   images,
   title,
-  address: _address,
   fullAddress,
   price,
   priceLabel,
@@ -1024,7 +1022,6 @@ const PropDetail: React.FC<PropDetailProps> = ({
       <HeroSlider
         images={property.images}
         title={property.title}
-        address={property.address}
         fullAddress={fullAddress}
         price={property.price}
         priceLabel={property.priceLabel}
