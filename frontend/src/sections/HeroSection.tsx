@@ -50,6 +50,13 @@ export default function HeroSection({
     if (/^https?:\/\//i.test(path) || path.startsWith("//")) return path;
     return `${publicUrl}${path}`;
   };
+  const extractYouTubeId = (url?: string) => {
+    if (!url) return null;
+    const match = url.match(
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/,
+    );
+    return match?.[1] ?? null;
+  };
   const bgRef = useRef<HTMLDivElement>(null);
   const vignetteRef = useRef<HTMLDivElement>(null);
   const titleOneRef = useRef<HTMLDivElement>(null);
@@ -58,11 +65,11 @@ export default function HeroSection({
   const revealCtaRef = useRef<HTMLDivElement>(null);
   const [videoReady, setVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  useEffect(() => {
-    if (titleOneRef.current) titleOneRef.current.dataset.charSplit = "false";
-    if (titleTwoRef.current) titleTwoRef.current.dataset.charSplit = "false";
-  }, [titleLine1, titleLine2]);
+  const resolvedVideoUrl = resolveUrl(bgVideo);
+  const youTubeId = extractYouTubeId(resolvedVideoUrl);
+  const youTubeEmbedUrl = youTubeId
+    ? `https://www.youtube.com/embed/${youTubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youTubeId}&playsinline=1&modestbranding=1&rel=0`
+    : null;
 
   useEffect(() => {
     const video = videoRef.current;
@@ -122,78 +129,20 @@ export default function HeroSection({
 
     if (!titleOne || !titleTwo || !revealSub) return;
 
-    const splitToChars = (el: HTMLElement) => {
-      if (el.dataset.charSplit === "true") {
-        return Array.from(el.querySelectorAll<HTMLElement>(".hero-char"));
-      }
-      el.dataset.charSplit = "true";
-
-      const allChars: HTMLElement[] = [];
-      const processText = (text: string, container: HTMLElement) => {
-        const parts = text.split(/(\s+)/);
-        parts.forEach((part) => {
-          if (/^\s+$/.test(part)) {
-            container.appendChild(document.createTextNode(part));
-          } else if (part) {
-            const wordWrap = document.createElement("span");
-            wordWrap.className = "hero-word";
-            wordWrap.style.cssText =
-              "display:inline-block;overflow:hidden;vertical-align:top";
-            part.split("").forEach((ch) => {
-              const charSpan = document.createElement("span");
-              charSpan.className = "hero-char";
-              charSpan.style.display = "inline-block";
-              charSpan.textContent = ch;
-              wordWrap.appendChild(charSpan);
-              allChars.push(charSpan);
-            });
-            container.appendChild(wordWrap);
-          }
-        });
-      };
-
-      const originalNodes = Array.from(el.childNodes);
-      el.innerHTML = "";
-      originalNodes.forEach((node) => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          processText(node.textContent || "", el);
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-          const wrapper = document.createElement(
-            (node as Element).nodeName.toLowerCase(),
-          );
-          Array.from((node as Element).attributes).forEach((attr) =>
-            wrapper.setAttribute(attr.name, attr.value),
-          );
-          processText(node.textContent || "", wrapper);
-          el.appendChild(wrapper);
-        }
-      });
-
-      return allChars;
-    };
-
-    const titleOneChars = splitToChars(titleOne);
-    const titleTwoChars = splitToChars(titleTwo);
-
-    gsap.set([...titleOneChars, ...titleTwoChars], { y: 40, opacity: 0 });
-    gsap.set([titleOne, titleTwo], { opacity: 1 });
-
     const tl = gsap.timeline({ delay: 0.9 });
-    tl.to(titleOneChars, {
+    tl.to(titleOne, {
       y: 0,
       opacity: 1,
       duration: 1.1,
-      ease: "back.out(1.4)",
-      stagger: 0.03,
+      ease: "power3.out",
     });
     tl.to(
-      titleTwoChars,
+      titleTwo,
       {
         y: 0,
         opacity: 1,
         duration: 1.1,
-        ease: "back.out(1.4)",
-        stagger: 0.03,
+        ease: "power3.out",
       },
       0.25,
     );
@@ -234,11 +183,21 @@ export default function HeroSection({
             loading="eager"
             fetchPriority="high"
           />
-          {showVideo && bgVideo && (
+          {showVideo && youTubeEmbedUrl && (
+            <iframe
+              className="rgp-hero__bg-video"
+              src={youTubeEmbedUrl}
+              title="Hero background video"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              referrerPolicy="strict-origin-when-cross-origin"
+              onLoad={() => setVideoReady(true)}
+            />
+          )}
+          {showVideo && bgVideo && !youTubeEmbedUrl && (
             <video
               className="rgp-hero__bg-video"
               ref={videoRef}
-              src={resolveUrl(bgVideo)}
+              src={resolvedVideoUrl}
               autoPlay
               loop
               muted

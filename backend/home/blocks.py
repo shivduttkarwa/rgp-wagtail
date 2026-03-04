@@ -3,8 +3,10 @@ from wagtail.images.blocks import ImageChooserBlock
 
 
 class HeroBlock(blocks.StructBlock):
-    title_line_1 = blocks.CharBlock(required=False)
-    title_line_2 = blocks.CharBlock(required=False)
+    title = blocks.CharBlock(
+        required=False,
+        help_text="Single line. Use | to split into two lines. Use {gold}text{/gold} or {amber}text{/amber} for highlight.",
+    )
     subtitle = blocks.TextBlock(required=False)
     cta_label = blocks.CharBlock(required=False)
     cta_url = blocks.URLBlock(required=False)

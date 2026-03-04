@@ -73,7 +73,7 @@ a {
     180deg,
     rgba(0, 3, 46, 0.72) 0%,
     rgba(0, 3, 46, 0.18) 40%,
-    rgba(0, 3, 46, 0.0) 100%
+    rgba(0, 3, 46, 0) 100%
   );
   mix-blend-mode: multiply;
   pointer-events: none;
@@ -167,15 +167,17 @@ a {
 }
 
 .rgp-hero__title-text .rg-gold {
-  color: #f9c307;
+  color: var(--rg-gold, #f9c307) !important;
+  display: inline;
 }
 .rgp-hero__title-text .rg-amber {
-  color: #f9c307;
+  color: var(--rg-amber, #f9c307) !important;
+  display: inline;
 }
 
 /* ─── SUBTITLE ─── */
 .rgp-hero__subtitle {
-  margin-top: 4rem;
+  margin-top: 1rem;
   font-family: var(--font-body);
   font-size: clamp(0.772rem, 1.425vw, 1.069rem);
   font-weight: 400;
